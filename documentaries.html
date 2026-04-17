@@ -79,7 +79,10 @@
                 overlay.style.left = '0';
                 overlay.style.width = '100%';
                 overlay.style.height = '100%';
-                overlay.style.background = '#121212'; // match surface color
+                overlay.style.backgroundImage = 'url(https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg)';
+                overlay.style.backgroundColor = '#121212';
+                overlay.style.backgroundSize = 'cover';
+                overlay.style.backgroundPosition = 'center';
                 overlay.style.zIndex = '5';
                 overlay.style.transition = 'opacity 0.3s ease';
                 overlay.style.pointerEvents = 'none'; // let hover pass through

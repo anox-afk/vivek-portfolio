@@ -498,6 +498,10 @@
     gap: 40px;
 }
 
+.video-grid.portrait-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
 .video-card {
     background: var(--surface);
     border-radius: 16px;
@@ -518,6 +522,10 @@
     padding-bottom: 56.25%; /* 16:9 ratio */
     height: 0;
     overflow: hidden;
+}
+
+.video-container.portrait {
+    padding-bottom: 177.78%; /* 9:16 ratio */
 }
 
 .video-container iframe, .video-container video, .video-container div {

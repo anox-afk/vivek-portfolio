@@ -1,7 +1,7 @@
 :root {
-            --bg: #050505;
-            --surface: #121212;
-            --surface-hover: #1a1a1a;
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --surface-hover: #151515;
             --text-main: #f0f0f0;
             --text-muted: #999999;
             --accent: #d4af37; /* Cinematic gold */
@@ -180,9 +180,9 @@
             max-width: 95%;
             height: 75vh;
             object-fit: cover;
-            /* Cinematic blend vignette into background (Top and Bottom only) */
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-            mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+            /* Cinematic blend vignette into background (All edges) */
+            -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 60%, transparent 100%);
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 60%, transparent 100%);
             filter: grayscale(10%) contrast(110%) brightness(0.9);
             transition: var(--transition);
         }

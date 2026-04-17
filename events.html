@@ -91,6 +91,7 @@
     </footer>
 
     
+    
     <script>
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -122,14 +123,16 @@
                     overlay.style.backgroundImage = 'url(https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg)';
                 }
                 overlay.style.backgroundColor = '#121212';
-                overlay.style.backgroundSize = 'cover';
+                overlay.style.backgroundSize = 'contain';
                 overlay.style.backgroundPosition = 'center';
+                overlay.style.backgroundRepeat = 'no-repeat';
                 overlay.style.zIndex = '5';
                 overlay.style.transition = 'opacity 0.3s ease';
                 overlay.style.pointerEvents = 'none'; // let hover pass through
                 container.appendChild(overlay);
 
                 var isHovering = false;
+                var isReady = false;
 
                 var player = new YT.Player(el, {
                     height: '100%',
@@ -146,17 +149,20 @@
                         'modestbranding': 1,
                         'rel': 0,
                         'playsinline': 1,
-                        'iv_load_policy': 3
+                        'iv_load_policy': 3,
+                        'origin': window.location.protocol === 'file:' ? '*' : window.location.origin
                     },
                     events: {
                         'onReady': function(event) {
+                            isReady = true;
                             event.target.mute();
+                            if (isHovering) {
+                                event.target.playVideo();
+                            }
                         },
                         'onStateChange': function(event) {
-                            // When video starts playing, fade out the overlay
                             if (event.data === YT.PlayerState.PLAYING) {
                                 overlay.style.opacity = '0';
-                                // If the user already moved mouse away before it started, pause it
                                 if (!isHovering) {
                                     player.pauseVideo();
                                 }
@@ -171,13 +177,13 @@
                 if(card) {
                     card.addEventListener('mouseenter', function() {
                         isHovering = true;
-                        if (player && typeof player.playVideo === 'function') {
+                        if (isReady && player && typeof player.playVideo === 'function') {
                             player.playVideo();
                         }
                     });
                     card.addEventListener('mouseleave', function() {
                         isHovering = false;
-                        if (player && typeof player.pauseVideo === 'function') {
+                        if (isReady && player && typeof player.pauseVideo === 'function') {
                             player.pauseVideo();
                         }
                     });
@@ -186,5 +192,6 @@
         }
     </script>
 </body>
+
 
 </html>

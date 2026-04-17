@@ -639,23 +639,3 @@
     background: var(--accent);
     color: #000;
 }
-
-/* LOGO SPECIFICS */
-nav h2 { display: none; } /* Hide old logo style if any stray ones */
-.logo-wrapper {
-    height: 35px; /* Limits the visible height */
-    width: 60px; /* Limits width */
-    overflow: hidden; /* Crops the text below */
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    cursor: pointer;
-}
-.logo-wrapper img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    object-position: top center;
-    mix-blend-mode: screen; /* Removes black background */
-    filter: brightness(1.2);
-}

@@ -201,9 +201,10 @@
         /* ALBUM COLLAGE */
         .collage-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: 250px;
-            gap: 20px;
+            grid-template-columns: repeat(6, 1fr);
+            grid-auto-rows: 150px;
+            gap: 15px;
+            grid-auto-flow: dense;
         }
 
         .collage-item {
@@ -236,19 +237,24 @@
             grid-column: span 2;
         }
 
+        .collage-large {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
         @media (max-width: 992px) {
             .collage-grid {
-                grid-template-columns: repeat(2, 1fr);
-                grid-auto-rows: 200px;
+                grid-template-columns: repeat(4, 1fr);
+                grid-auto-rows: 150px;
             }
         }
         @media (max-width: 576px) {
             .collage-grid {
-                grid-template-columns: 1fr;
-                grid-auto-rows: 250px;
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 120px;
             }
-            .collage-wide { grid-column: span 1; }
-            .collage-tall { grid-row: span 1; }
+            .collage-wide { grid-column: span 2; }
+            .collage-large { grid-column: span 2; grid-row: span 2; }
         }
 
         /* WORK */

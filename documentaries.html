@@ -19,7 +19,18 @@
 </head>
 <body>
     <nav>
-        <h2 onclick="window.location.href='index.html'">VIVEK</h2>
+        <div class="brand-logo" onclick="window.location.href='index.html'" style="cursor: pointer; display: flex; align-items: center;">
+            <svg viewBox="0 0 100 40" width="90" height="40">
+                <defs>
+                    <linearGradient id="vkGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#BF953F" />
+                        <stop offset="50%" stop-color="#FCF6BA" />
+                        <stop offset="100%" stop-color="#AA771C" />
+                    </linearGradient>
+                </defs>
+                <text x="50" y="32" font-family="'Playfair Display', serif" font-size="36" font-weight="700" fill="url(#vkGold)" text-anchor="middle" letter-spacing="6">VK</text>
+            </svg>
+        </div>
         <div class="links">
             <a href="index.html#work">Work</a>
             <a href="index.html#about">About</a>

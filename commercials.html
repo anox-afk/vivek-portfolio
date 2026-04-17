@@ -64,8 +64,8 @@
         © 2026 Vivek Kumar | Cinematographer
     </footer>
 
+    
     <script>
-        // Load the IFrame Player API code asynchronously.
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -75,11 +75,28 @@
             document.head.appendChild(tag);
         }
 
-        // This function creates an <iframe> (and YouTube player) after the API code downloads.
         function onYouTubeIframeAPIReady() {
             var playerElements = document.querySelectorAll('.yt-player');
             playerElements.forEach(function(el) {
                 var videoId = el.getAttribute('data-video-id');
+                
+                // Create overlay
+                var container = el.parentElement;
+                var overlay = document.createElement('div');
+                overlay.className = 'video-poster';
+                overlay.style.position = 'absolute';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.background = '#121212'; // match surface color
+                overlay.style.zIndex = '5';
+                overlay.style.transition = 'opacity 0.3s ease';
+                overlay.style.pointerEvents = 'none'; // let hover pass through
+                container.appendChild(overlay);
+
+                var isHovering = false;
+
                 var player = new YT.Player(el, {
                     height: '100%',
                     width: '100%',
@@ -93,25 +110,40 @@
                         'loop': 1,
                         'playlist': videoId,
                         'modestbranding': 1,
-                        'rel': 0
+                        'rel': 0,
+                        'playsinline': 1,
+                        'iv_load_policy': 3
                     },
                     events: {
                         'onReady': function(event) {
-                            event.target.mute(); // Ensure muted for autoplay
+                            event.target.mute();
+                        },
+                        'onStateChange': function(event) {
+                            // When video starts playing, fade out the overlay
+                            if (event.data === YT.PlayerState.PLAYING) {
+                                overlay.style.opacity = '0';
+                                // If the user already moved mouse away before it started, pause it
+                                if (!isHovering) {
+                                    player.pauseVideo();
+                                }
+                            } else if (event.data === YT.PlayerState.PAUSED) {
+                                overlay.style.opacity = '1';
+                            }
                         }
                     }
                 });
                 
-                // Add hover event listeners to the card
-                var card = el.closest('.video-card');
+                var card = container.closest('.video-card');
                 if(card) {
                     card.addEventListener('mouseenter', function() {
-                        if (player && player.playVideo) {
+                        isHovering = true;
+                        if (player && typeof player.playVideo === 'function') {
                             player.playVideo();
                         }
                     });
                     card.addEventListener('mouseleave', function() {
-                        if (player && player.pauseVideo) {
+                        isHovering = false;
+                        if (player && typeof player.pauseVideo === 'function') {
                             player.pauseVideo();
                         }
                     });
@@ -120,4 +152,5 @@
         }
     </script>
 </body>
+
 </html>
